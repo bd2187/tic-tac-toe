@@ -19,19 +19,21 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            squares: Array(9).fill(null)
+            squares: Array(9).fill(null),
+            xIsNext: false
         }
     }
     
     handleSquare(i) {
-        // Create copy of squares array from this.state
-        const squares = this.state.squares.slice();
+        // Create copy of squares array from this.state    
+        const squares = [...this.state.squares];
 
-        // Refer to index in array
-        squares[i] = 'X';
+        // Refer to index in array. If xIsNext is true, squares[i]'s value will be 'X'
+        // Otherwise, the value is 'O'.
+        squares[i] = (this.state.xIsNext) ? 'X' : 'O';
 
         // Update State
-        this.setState({squares});
+        this.setState({squares, xIsNext: !this.state.xIsNext});   
     }
 
     renderSquare(i) {
@@ -44,7 +46,7 @@ class Board extends React.Component {
     }
 
     render() {
-        const status = 'Next player: X';
+        const status = `Next player: ${(this.state.isNext) ? 'X' : 'O'}`;
 
         return (
         <div>
